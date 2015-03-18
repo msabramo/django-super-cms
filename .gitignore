@@ -8,4 +8,4 @@ dist
 .coverage
 *.html
 env
-django_super_cms_.egg-info
+django_super_cms.egg-info
