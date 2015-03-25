@@ -3,6 +3,8 @@
 # FILE_NAME    : 
 # AUTHOR       : younger shen
 from django.contrib.auth.models import BaseUserManager
+from django.db import models
+from django.db.models import Q
 
 
 class UserManager(BaseUserManager):
@@ -28,3 +30,17 @@ class UserManager(BaseUserManager):
 
     def create_superuser(self, username, email, password, **extra_fields):
         return self._create_user(username, email, password, True, 0, **extra_fields)
+
+
+class SoftDeleteManager(models.Manager):
+
+    def __init__(self, soft=True, *args, **kwargs):
+        self.soft = soft
+        super(SoftDeleteManager, self).__init__(*args, **kwargs)
+
+    def get_queryset(self):
+        if self.soft:
+            query = Q(deleted_at__isnull=True)
+            return super(SoftDeleteManager, self).get_queryset().filter(query)
+        else:
+            return super(SoftDeleteManager, self).get_queryset()

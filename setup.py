@@ -33,7 +33,8 @@ setup(name='django-super-cms',
       zip_safe=False,
       install_requires=[
           # -*- Extra requirements: -*-
-          'Django >= 1.7'
+          'Django >= 1.7',
+          'unidecode'
       ],
       entry_points="""
       # -*- Entry points: -*-
