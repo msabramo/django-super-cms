@@ -35,7 +35,8 @@ setup(name='django-super-cms',
           'unidecode',
           'django-laravel-validator',
           'django-flash-message',
-          'django-simple-captcha'
+          'django-simple-captcha',
+          'python-cjson'
       ],
       entry_points="""
       # -*- Entry points: -*-

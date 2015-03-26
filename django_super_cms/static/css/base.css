@@ -1,0 +1,23 @@
+
+.account-main
+{
+    margin-top: 100px;
+}
+.captcha
+{
+    cursor: pointer;
+}
+
+.settings-panel
+{
+    margin-top: 70px;
+}
+
+.footer
+{
+    margin-top: 50px;
+}
+
+.muted {
+    color: #999999;
+}

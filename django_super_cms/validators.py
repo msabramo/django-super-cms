@@ -2,7 +2,11 @@
 # PROJECT_NAME : mysite
 # FILE_NAME    : 
 # AUTHOR       : younger shen
+from django.contrib.auth import authenticate
 from django_laravel_validator.validator import Validator
+from .utils import captcha_validate
+from .messages import CAPTCHA_INVALID
+from .messages import USER_INVALID
 
 
 class UserLoginValidator(Validator):
