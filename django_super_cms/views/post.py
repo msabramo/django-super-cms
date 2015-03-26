@@ -16,6 +16,8 @@ def index(requesst):
 @require_safe
 def post_show_view(request, post_id):
     post = get_object_or_404(Post, id=post_id)
+    tpl_name = post.template_name
+
     return HttpResponse(post.id)
 
 

@@ -4,6 +4,10 @@
 # AUTHOR       : younger shen
 
 # customer user
+import time
+import logging
+from django.utils.encoding import python_2_unicode_compatible
+from unidecode import unidecode
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import AbstractBaseUser
 from django.core.mail import send_mail
@@ -11,10 +15,8 @@ from django.utils.translation import ugettext as _
 from django.db import models
 from .managers import UserManager
 from .managers import SoftDeleteManager
-import logging
+
 logger = logging.getLogger('django_super_cms.models')
-from unidecode import unidecode
-import time
 
 
 class AbstractUser(AbstractBaseUser, PermissionsMixin):
@@ -44,7 +46,6 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
     soft_objects = SoftDeleteManager()
 
-
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
@@ -64,9 +65,13 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         return ''
 
 
+@python_2_unicode_compatible
 class User(AbstractUser):
     class Meta(AbstractUser.Meta):
         swappable = 'AUTH_USER_MODEL'
+
+    def __str__(self):
+        return self.username
 
 
 class Entity(models.Model):
@@ -79,6 +84,7 @@ class Entity(models.Model):
         abstract = True
 
 
+@python_2_unicode_compatible
 class Post(Entity):
 
     POST_SHOW = 0
@@ -119,12 +125,16 @@ class Post(Entity):
 
         super(Post, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         verbose_name_plural = _('posts')
         verbose_name = _('post')
         ordering = ['-created_at', '-click']
 
 
+@python_2_unicode_compatible
 class Comment(Entity):
     post = models.ForeignKey('Post', related_name='comments')
     author_name = models.CharField(_('author name'), max_length=255)
@@ -143,7 +153,24 @@ class Comment(Entity):
 
         super(Comment, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return str(self.id)
+
     class Meta:
         verbose_name = _('comment')
         verbose_name = _('comments')
         ordering = ['-created_at']
+
+
+@python_2_unicode_compatible
+class Configuration(Entity):
+    name = models.CharField(_('config name'), max_length=255)
+    value = models.CharField(_('config value'), max_length=255, blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('configuration')
+        verbose_name_plural = _('configurations')
+
