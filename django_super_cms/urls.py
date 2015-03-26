@@ -25,5 +25,12 @@ urlpatterns += patterns('django_super_cms.views.admin',
                         url(r'admin/index.html$', 'admin_index_view', name='dsc_admin_index_view'),
                         url(r'admin/login.html$', 'admin_login_view', name='dsc_admin_login_view')
                         )
+urlpatterns += patterns('django_super_cms.actions.admin',
+                        url(r'admin/login.action$', 'admin_login_action', name='dsc_admin_login_action')
+                        )
 
+# utils views
+urlpatterns += patterns('django_super_cms.views.utils',
+                        url(r'utils/captcha-verify.html$', 'captchat_verify_view', name='dsc_captcha_verify_view')
+                        )
 # captcha

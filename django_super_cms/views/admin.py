@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 from django.views.decorators.http import require_safe
 from django_super_cms.utils import captcha_generator
-from django_flash_message import storage
+from django_flash_message.storage import storage
 from ..models import Post
 
 
@@ -20,7 +20,8 @@ def admin_index_view(request):
 @require_safe
 def admin_login_view(request):
     ret = dict()
+    login_errors = storage.get_message(request, 'login_errors')
+
     captcha = captcha_generator()
     ret.update(captcha)
-    print ret
     return render(request, 'admin-ext/login.html', ret)
