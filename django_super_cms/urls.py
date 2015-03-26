@@ -14,5 +14,5 @@ urlpatterns = patterns('django_super_cms.views.main',
 #                         ),
 
 urlpatterns += patterns('django_super_cms.views.post',
-                        url(r'^post/(?P<post_id>[0-9]+)/$', 'post_show_view', name='dsc_post_show_view')
+                        url(r'post/(?P<post_id>[0-9]+).html$', 'post_show_view', name='dsc_post_show_view')
                         )

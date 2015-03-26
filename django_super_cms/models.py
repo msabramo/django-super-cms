@@ -6,6 +6,7 @@
 # customer user
 import time
 import logging
+from django.core.urlresolvers import reverse
 from django.utils.encoding import python_2_unicode_compatible
 from unidecode import unidecode
 from django.contrib.auth.models import PermissionsMixin
@@ -107,6 +108,7 @@ class Post(Entity):
     template_name = models.CharField(_('post templte name'), max_length=255)
     parent = models.ForeignKey('self', related_name='children', blank=True, null=True)
     post_type = models.IntegerField(_('post type'), choices=POST_TYPE_CHOICES, default=POST_TYPE_POST)
+    category = models.ForeignKey('Category', related_name='posts', blank=True, null=True)
 
     def save(self, *args, **kwargs):
 
@@ -124,6 +126,9 @@ class Post(Entity):
             self.template_name = 'page' if self.post_type == 0 else 'post'
 
         super(Post, self).save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse('dsc_post_show_view', args=(self.id,))
 
     def __str__(self):
         return self.title
@@ -174,3 +179,32 @@ class Configuration(Entity):
         verbose_name = _('configuration')
         verbose_name_plural = _('configurations')
 
+
+@python_2_unicode_compatible
+class Category(Entity):
+    name = models.CharField(_('category name'), max_length=255)
+    description = models.CharField(_('category description'), max_length=255, blank=True, null=True)
+    parent = models.ForeignKey('self', related_name='children', blank=True, null=True)
+    order = models.IntegerField(_('order'), default=0)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('category')
+        verbose_name_plural = _('categories')
+        ordering = ['-created_at', 'order']
+
+
+@python_2_unicode_compatible
+class Tag(Entity):
+    name = models.CharField(_('tag name'), max_length=255)
+    description = models.CharField(_('tag description'), max_length=255, blank=True, null=True)
+    posts = models.ManyToManyField('Post', related_name='tags', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('tag')
+        verbose_name_plural = _('tags')

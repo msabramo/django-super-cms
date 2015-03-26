@@ -4,7 +4,6 @@
 # AUTHOR       : younger shen
 
 from setuptools import setup, find_packages
-import sys, os
 
 version = '0.1a1'
 
@@ -32,9 +31,10 @@ setup(name='django-super-cms',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          # -*- Extra requirements: -*-
-          'Django >= 1.7',
-          'unidecode'
+          'django >= 1.7',
+          'unidecode',
+          'django-laravel-validator',
+          'django-flash-message'
       ],
       entry_points="""
       # -*- Entry points: -*-
