@@ -21,7 +21,8 @@ def admin_index_view(request):
 def admin_login_view(request):
     ret = dict()
     login_errors = storage.get_message(request, 'login_errors')
-
+    if login_errors:
+        ret.update(**login_errors)
     captcha = captcha_generator()
     ret.update(captcha)
     return render(request, 'admin-ext/login.html', ret)

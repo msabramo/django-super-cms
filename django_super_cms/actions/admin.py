@@ -19,5 +19,4 @@ def admin_login_action(request):
     else:
         errors = validator.errors()
         storage.add_message(request, 'login_errors', errors)
-
     return redirect(reverse('dsc_admin_login_view'))
