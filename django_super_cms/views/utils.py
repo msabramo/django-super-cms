@@ -6,7 +6,7 @@ from captcha.models import CaptchaStore
 from captcha.models import get_safe_now
 from django.http import Http404, JsonResponse
 from django.views.decorators.http import require_safe
-
+from ..models import User
 
 @require_safe
 def captchat_verify_view(request):
@@ -18,6 +18,18 @@ def captchat_verify_view(request):
         except CaptchaStore.DoesNotExist:
             raise Http404
         else:
-            return JsonResponse({'state': True})
+            return JsonResponse(dict(state=True))
+    else:
+        raise Http404
+
+
+@require_safe
+def username_verify_view(request):
+    username = request.GET.get('username', None)
+    if username:
+        if User.objects.filter(username=username).exists():
+            raise Http404
+        else:
+            return JsonResponse(dict(state=True))
     else:
         raise Http404

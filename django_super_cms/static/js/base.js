@@ -22,3 +22,11 @@ var reset_login_form = function()
     $('#id_captcha_1').val('');
     $('#password_confirm').val('');
 }
+
+var reset_regist_form = function()
+{
+    $('#username').val('');
+    $('#password').val('');
+    $('#id_captcha_1').val('');
+    $('#password_confirm').val('');
+}

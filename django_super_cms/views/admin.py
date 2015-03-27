@@ -26,3 +26,15 @@ def admin_login_view(request):
     captcha = captcha_generator()
     ret.update(captcha)
     return render(request, 'admin-ext/login.html', ret)
+
+
+@already_login_redirect
+@require_safe
+def admin_regist_view(request):
+    ret = dict()
+    regist_errrors = storage.get_message(request, 'regist_errors')
+    if regist_errrors:
+        ret.update(**regist_errrors)
+    captcha = captcha_generator()
+    ret.update(captcha)
+    return render(request, 'admin-ext/regist.html', ret)
