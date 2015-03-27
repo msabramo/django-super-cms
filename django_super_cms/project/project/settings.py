@@ -112,7 +112,7 @@ TEMPLATE_LOADERS = ('django.template.loaders.filesystem.Loader', 'django.templat
 LOGIN_URL = '/admin/login.html'
 
 # login redirect url
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/admin/login.html'
 
 if DEBUG:
     STATICFILES_DIRS = (BASE_DIR + "/static-dev",)

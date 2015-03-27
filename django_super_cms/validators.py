@@ -19,12 +19,12 @@ class UserLoginValidator(Validator):
     def check(self):
         captcha_0 = self.get('captcha_0')
         captcha_1 = self.get('captcha_1')
-        email = self.get('email')
+        username = self.get('username')
         password = self.get('password')
         if not captcha_validate(captcha_0, captcha_1):
             self.add_error(dict(captcha=CAPTCHA_INVALID))
         else:
-            user = authenticate(email=email, password=password)
+            user = authenticate(username=username, password=password)
             if not user:
                 self.add_error(dict(user=USER_INVALID))
             else:
