@@ -10,10 +10,10 @@ version = '0.1a1'
 
 setup(name='django-super-cms',
       version=version,
-      description="a simple cms app for django , just for small site usage",
+      description="A simple CMS app for Django; just for small site usage",
       long_description="""\
-      a simple cms app for django , just for small site usage,
-      the app suites small site and small bussiness.
+      A simple CMS app for Django; just for small site usage,
+      the app suits small sites and small businesses.
       """,
       classifiers=['Development Status :: 2 - Pre-Alpha',
                    'Environment :: Web Environment',
