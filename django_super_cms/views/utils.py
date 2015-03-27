@@ -8,6 +8,7 @@ from django.http import Http404, JsonResponse
 from django.views.decorators.http import require_safe
 from ..models import User
 
+
 @require_safe
 def captchat_verify_view(request):
     if len(request.GET.keys()) == 1 and len(request.GET.values()) == 1:
@@ -28,6 +29,17 @@ def username_verify_view(request):
     username = request.GET.get('username', None)
     if username:
         if User.objects.filter(username=username).exists():
+            raise Http404
+        else:
+            return JsonResponse(dict(state=True))
+    else:
+        raise Http404
+
+@require_safe
+def email_verify_view(request):
+    email = request.GET.get('email', None)
+    if email:
+        if User.objects.filter(email=email).exists():
             raise Http404
         else:
             return JsonResponse(dict(state=True))

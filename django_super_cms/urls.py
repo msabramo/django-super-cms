@@ -27,12 +27,14 @@ urlpatterns += patterns('django_super_cms.views.admin',
                         url(r'admin/regist.html$', 'admin_regist_view', name='dsc_admin_regist_view')
                         )
 urlpatterns += patterns('django_super_cms.actions.admin',
-                        url(r'admin/login.action$', 'admin_login_action', name='dsc_admin_login_action')
+                        url(r'admin/login.action$', 'admin_login_action', name='dsc_admin_login_action'),
+                        url(r'admin/regist.action$', 'admin_regist_action', name='dsc_admin_regist_action')
                         )
 
 # utils views
 urlpatterns += patterns('django_super_cms.views.utils',
                         url(r'utils/captcha-verify.html$', 'captchat_verify_view', name='dsc_captcha_verify_view'),
-                        url(r'utils/user-verify.html$', 'username_verify_view', name='dsc_username_verify_view')
+                        url(r'utils/user-verify.html$', 'username_verify_view', name='dsc_username_verify_view'),
+                        url(r'utils/email-verify.html$', 'email_verify_view', name='dsc_email_verify_view')
                         )
 # captcha

@@ -54,6 +54,12 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = _('users')
         abstract = True
 
+    def save(self, *args, **kwargs):
+        if not self.display_name:
+            self.display_name = self.username
+
+        super(AbstractUser, self).save(*args, **kwargs)
+
     def get_full_name(self):
         return self.display_name if self.display_name else self.username
 
