@@ -8,6 +8,7 @@ import time
 import logging
 from django.core.urlresolvers import reverse
 from django.utils.encoding import python_2_unicode_compatible
+from sorl.thumbnail import ImageField
 from unidecode import unidecode
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import AbstractBaseUser
@@ -33,13 +34,14 @@ class AbstractUser(AbstractBaseUser, PermissionsMixin):
                           )
 
     username = models.CharField(_('username'), max_length=255, unique=True)
-    display_name = models.CharField(_('nickname'), max_length=25, unique=True)
+    display_name = models.CharField(_('user display name'), max_length=25, unique=True)
     email = models.EmailField(_('user email address'), blank=True, null=True)
     url = models.URLField(_('user url'), max_length=255, blank=True, null=True)
     created_at = models.DateTimeField(_('date created'), auto_now_add=True)
     updated_at = models.DateTimeField(_('date updated'), auto_now=True)
     deleted_at = models.DateTimeField(_('date deleted'), blank=True, null=True)
     user_status = models.IntegerField(_('user status'), choices=USER_STATUS_CHOICES, default=USER_DEACTIVED)
+    avatar = ImageField(_('user avatar'), upload_to='account/avatar/%Y/%m/%d', null=True, blank=True)
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
