@@ -9,6 +9,8 @@ from captcha.models import get_safe_now
 from django.core.urlresolvers import reverse
 from django.core import serializers
 from django.http import HttpResponseNotAllowed
+from django.conf import settings
+from django.shortcuts import redirect
 
 
 def captcha_validate(key, value):
@@ -43,3 +45,14 @@ def captcha_generator():
     refresh_url = reverse('captcha-refresh')
     image_url = reverse('captcha-image', kwargs={'key': key})
     return dict(captcha_key=key, captcha_refresh_url=refresh_url, captcha_image_url=image_url)
+
+
+def already_login_redirect(viewe_func, redirect_url=settings.LOGIN_REDIRECT_URL):
+    def decorator(view_func):
+        def wrapper_view(request, *args, **kwargs):
+            if request.user.is_authenticated():
+                return redirect(redirect_url)
+            else:
+                return view_func(request, *args, **kwargs)
+        return wrapper_view
+    return decorator(viewe_func)
